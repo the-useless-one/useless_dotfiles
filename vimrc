@@ -46,7 +46,8 @@ set ruler
 syntax enable
 nmap <leader>$ :syntax sync fromstart<cr>
 set t_Co=256
-colorscheme kolor
+"colorscheme kolor
+colorscheme molokai
 if has("gui_running")
 	set cursorline
 	"set cursorcolumn
@@ -155,11 +156,27 @@ sunmap e
 
 set pastetoggle=<F2>
 
+
 if has("gui_macvim")
 	autocmd Syntax,FileType ocaml nmap <leader>m :w !LANG="" /sw/bin/camllight<cr>
 else
 	autocmd Syntax,FileType ocaml nmap <leader>m :w !camllight<cr>
 endif
+
+"""""""""""
+" MiniBufExpl
+""""""""""
+" Use Ctrl + Tab to navigate between buffers
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplForceSyntaxEnable = 0
+
+"""""""""""
+" NERDTree
+"""""""""""
+" Close vim if the only opened buffer is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" Use Ctrl + N to toggle NERDTree
+map <C-n> :NERDTreeToggle<CR>
 
 " Remove automatic line breaks
 set textwidth=0
