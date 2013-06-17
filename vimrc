@@ -8,6 +8,8 @@ filetype indent on
 set nobackup
 set noswapfile
 
+execute pathogen#infect()
+
 " Omni-completion
 set ofu=syntaxcomplete#Complete
 set tags+=~/.vim/tags/cpp
@@ -221,4 +223,3 @@ set shellslash
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
 set background=dark
-execute pathogen#infect()

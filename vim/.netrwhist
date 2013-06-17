@@ -1,4 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/usr/share/qt4/mkspecs/win32-x-g++'
-let g:netrw_dirhist_2='/home/useless/Documents/Programmation/Python/mitm/potions/poison'
