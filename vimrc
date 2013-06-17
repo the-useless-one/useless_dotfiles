@@ -5,6 +5,8 @@ set nocompatible
 set history=400
 filetype plugin on
 filetype indent on
+set nobackup
+set noswapfile
 
 " Omni-completion
 set ofu=syntaxcomplete#Complete
@@ -56,7 +58,7 @@ if has("gui_running")
 
 	colorscheme desert
 
-	"colorscheme molokai
+	colorscheme molokai
 	if has("gui_macvim")
 		set guifont=Envy\ Code\ R:h12
 	elseif has("gui_gtk2")
@@ -147,6 +149,7 @@ set cc=80
 set shiftwidth=4
 set tabstop=4
 
+" CamelCase plugin (move according to CamelCase, underscores, etc.)
 map w <Plug>CamelCaseMotion_w
 map b <Plug>CamelCaseMotion_b
 map e <Plug>CamelCaseMotion_e
@@ -154,6 +157,7 @@ sunmap w
 sunmap b
 sunmap e
 
+" So that you can deactivate autoindent when you paste
 set pastetoggle=<F2>
 
 
@@ -217,3 +221,4 @@ set shellslash
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
 set background=dark
+execute pathogen#infect()
