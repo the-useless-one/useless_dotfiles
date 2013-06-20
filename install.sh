@@ -11,7 +11,7 @@ dir=dotfiles
 # This variable is the name of the directory where we will back up existing dotfiles
 backup_dir=dotfiles_back
 # This variable is the list of files/dirs to symlink from the home directory
-files="conky conkyrc fortunes vimrc vim zshrc"    
+files="conky conkyrc fortunes vimrc vim zshrc config/awesome"    
 
 ##########
 
