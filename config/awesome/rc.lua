@@ -11,15 +11,15 @@ require("naughty")
 require("debian.menu")
 
 -- Battery
-require("battery")
-battery_widget = widget({type = "textbox", name = "battery_widget", align = "right" })
-bat_clo = battery.batclosure("BAT0")
-battery_widget.text = bat_clo()
-battimer = timer({ timeout = 30 })
-battimer:add_signal("timeout", function() battery_widget.text = bat_clo() end)
-battimer:start()
-battery_widget:add_signal("mouse::enter", function() battery.add_battery_popup('Battery 0: ') end)
-battery_widget:add_signal("mouse::leave", battery.remove_battery_popup)
+ -- require("battery")
+ -- battery_widget = widget({type = "textbox", name = "battery_widget", align = "right" })
+ -- bat_clo = battery.batclosure("BAT0")
+ -- battery_widget.text = bat_clo()
+ -- battimer = timer({ timeout = 30 })
+ -- battimer:add_signal("timeout", function() battery_widget.text = bat_clo() end)
+ -- battimer:start()
+ -- battery_widget:add_signal("mouse::enter", function() battery.add_battery_popup('Battery 0: ') end)
+ -- battery_widget:add_signal("mouse::leave", battery.remove_battery_popup)
 
 -- Calendar
 require("calendar")
@@ -201,7 +201,7 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
-	battery_widget,
+	--battery_widget,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -357,6 +357,7 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
+					 size_hints_honor = false,
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
