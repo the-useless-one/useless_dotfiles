@@ -150,6 +150,7 @@ set cc=80
 
 set shiftwidth=4
 set tabstop=4
+set expandtab
 
 " CamelCase plugin (move according to CamelCase, underscores, etc.)
 map w <Plug>CamelCaseMotion_w
