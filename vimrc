@@ -224,3 +224,4 @@ set shellslash
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
 set background=dark
+let tex_no_error=1
