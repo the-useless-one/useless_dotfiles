@@ -23,6 +23,16 @@ battery_widget:add_signal("mouse::leave", battery.remove_battery_popup)
 
 -- Calendar
 require("calendar")
+function run_once(cmd)
+  findme = cmd
+  firstspace = cmd:find(" ")
+  if firstspace then
+    findme = cmd:sub(0, firstspace-1)
+  end
+  awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
+end
+
+run_once("xscreensaver -no-splash")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
