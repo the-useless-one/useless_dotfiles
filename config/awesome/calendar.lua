@@ -17,6 +17,9 @@ function add_calendar(inc_offset)
     datespec = datespec.year * 12 + datespec.month - 1 + offset
     datespec = (datespec % 12 + 1) .. " " .. math.floor(datespec / 12)
     local day = os.date("%d")
+    if string.sub(day, 1, 1)  == '0' then
+        day = string.sub(day, 2)
+    end
     local cal = awful.util.pread("ncal -hCm " .. datespec)
     cal = string.gsub(cal, ' '..day..' ', '<span font-weight="bold" color="#FFFFFF"> '..day..' </span>')
     calendar = naughty.notify({
