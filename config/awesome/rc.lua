@@ -11,18 +11,19 @@ require("naughty")
 require("debian.menu")
 
 -- Battery
-require("battery")
-battery_widget = widget({type = "textbox", name = "battery_widget", align = "right" })
-bat_clo = battery.batclosure("BAT0")
-battery_widget.text = bat_clo()
-battimer = timer({ timeout = 30 })
-battimer:add_signal("timeout", function() battery_widget.text = bat_clo() end)
-battimer:start()
-battery_widget:add_signal("mouse::enter", function() battery.add_battery_popup('Battery 0: ') end)
-battery_widget:add_signal("mouse::leave", battery.remove_battery_popup)
+--require("battery")
+--battery_widget = widget({type = "textbox", name = "battery_widget", align = "right" })
+--bat_clo = battery.batclosure("BAT0")
+--battery_widget.text = bat_clo()
+--battimer = timer({ timeout = 30 })
+--battimer:add_signal("timeout", function() battery_widget.text = bat_clo() end)
+--battimer:start()
+--battery_widget:add_signal("mouse::enter", function() battery.add_battery_popup('Battery 0: ') end)
+--battery_widget:add_signal("mouse::leave", battery.remove_battery_popup)
 
 -- Calendar
-require("calendar")
+require('calendar')
+
 function run_once(cmd)
   findme = cmd
   firstspace = cmd:find(" ")
@@ -127,10 +128,7 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
-mytextclock:add_signal("mouse::enter", function()
-    add_calendar(0)
-end)
-mytextclock:add_signal("mouse::leave", remove_calendar)
+calendar.addCalendarToWidget(mytextclock, '<span font-weight="bold" color="white">%s</span>')
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -211,7 +209,7 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
-        battery_widget,
+        --battery_widget,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
