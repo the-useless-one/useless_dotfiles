@@ -11,18 +11,30 @@ require("naughty")
 require("debian.menu")
 
 -- Battery
---require("battery")
---battery_widget = widget({type = "textbox", name = "battery_widget", align = "right" })
---bat_clo = battery.batclosure("BAT0")
---battery_widget.text = bat_clo()
---battimer = timer({ timeout = 30 })
---battimer:add_signal("timeout", function() battery_widget.text = bat_clo() end)
---battimer:start()
---battery_widget:add_signal("mouse::enter", function() battery.add_battery_popup('Battery 0: ') end)
---battery_widget:add_signal("mouse::leave", battery.remove_battery_popup)
+require("battery")
+battery_widget = widget({type = "textbox", name = "battery_widget", align = "right" })
+bat_clo = battery.batclosure("BAT0")
+battery_widget.text = bat_clo()
+battimer = timer({ timeout = 30 })
+battimer:add_signal("timeout", function() battery_widget.text = bat_clo() end)
+battimer:start()
+battery_widget:add_signal("mouse::enter", function() battery.add_battery_popup('Battery 0: ') end)
+battery_widget:add_signal("mouse::leave", battery.remove_battery_popup)
 
 -- Calendar
 require('calendar')
+
+-- Volume
+require('volume')
+
+tb_volume = widget({ type = "textbox", name = "tb_volume", align = "right" })
+tb_volume:buttons({
+button({ }, 4, function () volume.update_volume("up", tb_volume) end),
+button({ }, 5, function () volume.update_volume("down", tb_volume) end),
+button({ }, 1, function () volume.update_volume("mute", tb_volume) end)
+})
+volume.update_volume("update", tb_volume)
+awful.hooks.timer.register(10, function () volume.update_volume("update", tb_volume) end)
 
 function run_once(cmd)
   findme = cmd
@@ -209,7 +221,8 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
-        --battery_widget,
+        battery_widget,
+        tb_volume,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -227,9 +240,12 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
-    awful.key({ }, "XF86AudioRaiseVolume", function ()            awful.util.spawn("amixer set Master 5%+ unmute", false) end),
-    awful.key({ }, "XF86AudioLowerVolume", function ()            awful.util.spawn("amixer set Master 5%- unmute", false) end),
-    awful.key({ }, "XF86AudioMute",   function ()                 awful.util.spawn("amixer sset Master toggle", false) end),
+    awful.key({ }, "XF86AudioRaiseVolume",function () volume.update_volume("up", tb_volume) end),
+    awful.key({ }, "XF86AudioLowerVolume",function  () volume.update_volume("down", tb_volume) end),
+    awful.key({ }, "XF86AudioMute",function  () volume.update_volume("mute", tb_volume) end),
+--    awful.key({ }, "XF86AudioRaiseVolume", function ()            awful.util.spawn("amixer set Master 5%+ unmute", false) end),
+--    awful.key({ }, "XF86AudioLowerVolume", function ()            awful.util.spawn("amixer set Master 5%- unmute", false) end),
+--    awful.key({ }, "XF86AudioMute",   function ()                 awful.util.spawn("amixer sset Master toggle", false) end),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
