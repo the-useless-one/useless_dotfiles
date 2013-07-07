@@ -46,6 +46,7 @@ function run_once(cmd)
 end
 
 run_once("xscreensaver -no-splash")
+run_once("nm-applet")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
