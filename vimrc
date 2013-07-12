@@ -137,6 +137,10 @@ map <A-Right> gt
 
 imap <C-Space> <C-x><C-o>
 
+" Switch between buffers
+map <TAB> :MBEbn<CR>
+map <S-TAB> :MBEbb<CR>
+
 """""""""""
 " Text options
 """""""""""
