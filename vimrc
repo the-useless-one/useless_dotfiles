@@ -64,7 +64,8 @@ if has("gui_running")
 	if has("gui_macvim")
 		set guifont=Envy\ Code\ R:h12
 	elseif has("gui_gtk2")
-		set guifont=Envy\ Code\ R\ 08 " TODO : Implement this for Win32
+		"set guifont=Envy\ Code\ R\ 08 " TODO : Implement this for Win32
+		set guifont=Inconsolata " TODO : Implement this for Win32
 	endif
 
 	"Set window size
