@@ -1,11 +1,24 @@
 # my zshrc -- Alexis ROBERT <alexis.robert@gmail.com>
 
 # Display a Firefly quote if there is a fortune file
+
+# We determine if fortune is installed
 which fortune > /dev/null 2>&1
 retval=$?
-if [[ $retval != 1 && -f ~/.fortunes/firefly ]]
+fortune_command=fortune
+
+# On Debian systems, fortune is not in the path, so we check directly in
+# the installation directory
+if [[ $retval == 1 ]]
 then
-	fortune ~/.fortunes/firefly
+    ls /usr/games/fortune > /dev/null 2>&1
+    retval=$?
+    fortune_command=/usr/games/fortune
+fi
+
+if [[ $retval == 0 && -f ~/.fortunes/firefly ]]
+then
+	$fortune_command ~/.fortunes/firefly
 else
 	echo -n "Don't panic. And carry a towel."
 fi
