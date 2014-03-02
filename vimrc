@@ -220,6 +220,9 @@ endif
 set undofile
 set undodir=~/.vim/tmp//,/var/tmp/**/,/tmp//,.
 
+set encoding=utf-8
+set fileencoding=utf-8
+
 """""""""""
 " LaTeX
 """""""""""
