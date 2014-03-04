@@ -27,6 +27,12 @@ to install my dotfiles. You can specify the dotfiles you want as arguments:
 
     ./install.sh config/awesome #not just config
 
+**WARNING:** there is a hard-coded path in
+`/useless_dotfiles/config/awesome/themes/default/theme/lua` (to wit,
+`theme.wallpaper_cmd = { "awsetbg /home/useless/.config/awesome/themes/
+wallpaper"}`). This is because you can't use a relative path in the theme
+configuration file, so make sure to change this line.
+
 ## COPYRIGHT
 
 Dotfiles

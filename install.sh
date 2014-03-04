@@ -38,6 +38,10 @@ do
         echo "[fail] $dotfile is not a valid dotfile"
         exit 1
     fi
+    if [[ "$dotfile" == "config/awesome" ]]
+    then
+        echo "[warn] there is a hardcoded path to change in config/awesome/themes/default/theme.lua, in the theme/wallpaper_cmd"
+    fi
 done
 
 # We ask the user if he wants to backup existing dotfiles
