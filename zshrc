@@ -94,35 +94,54 @@ fi
 
 # Prompt
 debugPrint "- Setting up prompt (PS1) ..."
+autoload -U colors && colors
 
-if is-at-least 4.3.9 ; then
-	local USERCOLOR
-	USERCOLOR="%F{blue}"
-	if [[ "$UID" == "0" ]] ; then
-		USERCOLOR="%F{red}" # RED prompt for root
-	fi
+# We define color shortcuts
+local reset="%{${reset_color}%}"
+local magenta="%{$fg[magenta]%}"
+local white="%{$fg[white]%}"
+local gray="%{$fg_bold[black]%}"
+local green="%{$fg_bold[green]%}"
+local red="%{$fg[red]%}"
+local blue="%{$fg[blue]%}"
+local yellow="%{$fg[yellow]%}"
 
-	local HOSTCOLOR
-	if [[ -f $HOME/.zsh/hostcolor ]] ; then
-		HOSTCOLOR="%F{`cat $HOME/.zsh/hostcolor`}"
-	else
-		HOSTCOLOR="%F{green}"
-	fi
+local op="${gray}%B[%b${reset}"
+local cp="${gray}%B]%b${reset}"
 
-	export PS1="%B$USERCOLOR%n%b%f@%B$HOSTCOLOR%m%b%f %~ %(?..[%?] )%# " 
+function collapse_pwd() {
+    echo $(pwd | sed -e "s,^$HOME,~,")
+}
 
-	if [[ "${ZSH_PRIVACY_MODE}" == "1" ]] ; then
-		export RPROMPT="%B%F{red}privacy mode%f%b"
-	else
-		export RPROMPT=""
-	fi
-else
-	if [[ "$UID" == "0" ]] ; then
-	        export PS1="$(print '%{\e[1;31m%}')%n $(print '%{\e[0m%}')@$(print '%{\e[1;32m%}') %m $(print '%{\e[0m%}')%~ %(?..[%?] )%# " # RED user for root
-	else    
-	        export PS1="$(print '%{\e[1;34m%}')%n $(print '%{\e[0m%}')@$(print '%{\e[1;32m%}') %m $(print '%{\e[0m%}')%~ %(?..[%?] )%# " # BLUE user else
-	fi
+function setprompt() {
+# First line has user info...
+local usercolor="${blue}"
+if [[ "$UID" == "0" ]] ; then
+    usercolor="${red}" # RED prompt for root
 fi
+local user_host="${op}$usercolor%B%n%b${reset}@${green}%B%m%b${cp}"
+local userinfo="${gray}╭─${reset}${user_host}"
+local userinfo_width="${#${(S%%)${userinfo}//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
+
+# ... and current working directory
+local path_p="${op}$(collapse_pwd)${cp}"
+local path_p_width=${(S)path_p//\%\{*\%\}}
+path_p_width="${#${(S%%)${path_p_width}//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
+
+local filler_width=$(($COLUMNS - ${userinfo_width} - ${path_p_width} - 1))
+local filler="${gray}${(l:${filler_width}::─:)}${reset}"
+
+# Second line, with return code and smiley
+local ret_status="${op}%B%?%b${cp}"
+local smiley="%(?,${green}%B:)%b${reset},${red}%B:(%b${reset})"
+
+# Final PROMPT
+PROMPT="${userinfo}${filler}${path_p}
+${gray}╰─${reset}${ret_status}-${op}${smiley}${cp} %# "
+
+local cur_cmd="${op}%_${cp}"
+PROMPT2="${cur_cmd}> "
+}
 
 # Aliases
 debugPrint "- Setting up aliases ..."
@@ -139,6 +158,7 @@ alias "cd.."="cd .."
 alias "sl"="ls"
 alias "recd"='cd $PWD'
 alias "ls-l"="ls -l"
+alias "grpe"="grep"
 
 # Other environment variables (like EDITOR)
 debugPrint "- Other environment variables (like EDITOR) ..."
@@ -333,6 +353,7 @@ function title {
   
 function precmd {
 	title zsh "$PWD"
+    setprompt
 }
   
 function preexec {
