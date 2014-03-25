@@ -362,6 +362,30 @@ function preexec {
 	title $cmd[1]:t "$cmd[2,-1]"
 }
 
+function flip() {
+  perl -C3 -Mutf8 -lpe '$_=reverse;y/a-zA-Z.['\'',({?!\"<_;‿⁅∴\r/ɐqɔpǝɟƃɥıɾʞ|ɯuodbɹsʇnʌʍxʎzɐqɔpǝɟƃɥıɾʞ|ɯuodbɹsʇnʌʍxʎz˙],'\'')}¿¡,>‾؛⁀⁆∵\n/' <<< "$1"
+}
+
+function fuck() {
+    CMD="pkill"
+    which $CMD >/dev/null || CMD="killall"
+    echo
+    FLIP=' (╯°□°）╯︵'
+    if [ "$1" "==" "off" ]; then
+        shift
+        SIG="-9"
+    else
+        [ "$1" "==" "you" ] && shift
+        SIG=""
+    fi
+    [ -z "$1" ] && { echo "┬─┬﻿ ノ( ゜-゜ノ) patience young grasshopper"; echo; return; }
+    if $CMD $SIG "$1"; then
+        echo "$FLIP$(flip $1)"; echo
+    else
+        echo "┬─┬﻿ ︵ /(.□. \）"; echo
+    fi
+}
+
 ### SYSTEM DEPENDENT TRICKS ###
 debugPrint "\n=> System dependent tricks ..."
 
