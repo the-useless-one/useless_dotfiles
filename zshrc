@@ -352,7 +352,7 @@ function title {
 }
   
 function precmd {
-	title zsh "$PWD"
+    title zsh `collapse_pwd`
     setprompt
 }
   
