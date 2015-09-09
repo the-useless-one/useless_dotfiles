@@ -44,4 +44,4 @@ minimum_size 1440 0
 #mpd_port 6600
 
 TEXT
-${alignc}${image /home/useless/.conky/fedora.png -s 25x20}Date: ${color ffffff}${time %d/%m/%y}${color}  Time: ${color ffffff}${time %H:%M:%S}${color}  |  ${color ffffff}${exec whoami}${color}@${color ffffff}$nodename${color}  Kernel: ${color ffffff}$kernel${color}  Uptime: ${color ffffff}${uptime_short}${color}  |  Cpu: ${color ffffff}${cpu}%${color}  Ram: ${color ffffff}$mem / $memmax${color}  Swap: ${color ffffff}$swap / $swapmax${color} Root: ${color ffffff}${fs_used /} / ${fs_size /}${color} Home: ${color ffffff}${fs_used /home} / ${fs_size /home}${color} 
+${alignc}${image /home/useless/.conky/debian.png -s 25x20}Date: ${color ffffff}${time %d/%m/%y}${color}  Time: ${color ffffff}${time %H:%M:%S}${color}  |  ${color ffffff}${exec whoami}${color}@${color ffffff}$nodename${color}  Kernel: ${color ffffff}$kernel${color}  Uptime: ${color ffffff}${uptime_short}${color}  |  Cpu: ${color ffffff}${cpu}%${color}  Ram: ${color ffffff}$mem / $memmax${color}  Swap: ${color ffffff}$swap / $swapmax${color} Root: ${color ffffff}${fs_used /} / ${fs_size /}${color}
