@@ -109,6 +109,8 @@ local yellow="%{$fg[yellow]%}"
 local op="${gray}%B[%b${reset}"
 local cp="${gray}%B]%b${reset}"
 
+source ~/.zsh/zsh-git-prompt/zshrc.sh
+
 function collapse_pwd() {
     echo $(pwd | sed -e "s,^$HOME,~,")
 }
@@ -128,7 +130,18 @@ local path_p="${op}$(collapse_pwd)${cp}"
 local path_p_width=${(S)path_p//\%\{*\%\}}
 path_p_width="${#${(S%%)${path_p_width}//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
 
-local filler_width=$(($COLUMNS - ${userinfo_width} - ${path_p_width} - 1))
+# ... and current git status
+local git_status=$(git_super_status)
+if [[ -z $git_status ]] ; then
+    local git_p=""
+    local git_p_width=0
+else
+    local git_p="${gray}─${op}$(git_super_status)${cp}${gray}──${reset}"
+    local git_p_width=${(S)git_p//\%\{*\%\}}
+    git_p_width="${#${(S%%)${git_p_width}//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
+fi
+
+local filler_width=$(($COLUMNS - ${userinfo_width} - ${git_p_width} - ${path_p_width} - 1))
 local filler="${gray}${(l:${filler_width}::─:)}${reset}"
 
 # Second line, with return code and smiley
@@ -136,7 +149,7 @@ local ret_status="${op}%B%?%b${cp}"
 local smiley="%(?,${green}%B:)%b${reset},${red}%B:(%b${reset})"
 
 # Final PROMPT
-PROMPT="${userinfo}${filler}${path_p}
+PROMPT="${userinfo}${filler}${git_p}${path_p}
 ${gray}╰─${reset}${ret_status}-${op}${smiley}${cp} %# "
 
 local cur_cmd="${op}%_${cp}"
