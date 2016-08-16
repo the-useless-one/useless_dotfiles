@@ -141,7 +141,7 @@ else
     git_p_width="${#${(S%%)${git_p_width}//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
 fi
 
-local filler_width=$(($COLUMNS - ${userinfo_width} - ${git_p_width} - ${path_p_width} - 1))
+local filler_width=$(($COLUMNS - ${userinfo_width} - ${git_p_width} - ${path_p_width} - 5))
 local filler="${gray}${(l:${filler_width}::─:)}${reset}"
 
 # Second line, with return code and smiley
