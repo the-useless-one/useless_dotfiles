@@ -5,7 +5,7 @@ install_dir=~/useless_dotfiles
 # This variable is the name of the directory where we will back up existing dotfiles
 default_backup_dir=~/dotfiles_back
 # This variable is the list of files/dirs available for installation
-default_dotfiles="conky conkyrc fortunes vimrc vim zshrc zsh config/awesome"    
+default_dotfiles="conky conkyrc fortunes vimrc vim zshrc zsh/zsh-git-prompt config/awesome"    
 
 # If no dotfile was specified on the CLI, we ask the user which ones he wants
 # to install
