@@ -126,7 +126,7 @@ local userinfo="${gray}╭─${reset}${user_host}"
 local userinfo_width="${#${(S%%)${userinfo}//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
 
 # ... and current working directory
-local path_p="${op}$(collapse_pwd)${cp}"
+local path_p="${gray}─${op}$(collapse_pwd)${cp}"
 local path_p_width=${(S)path_p//\%\{*\%\}}
 path_p_width="${#${(S%%)${path_p_width}//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
 
@@ -136,12 +136,22 @@ if [[ -z $git_status ]] ; then
     local git_p=""
     local git_p_width=0
 else
-    local git_p="${gray}─${op}$(git_super_status)${cp}${gray}──${reset}"
+    local git_p="${gray}─${op}$(git_super_status)${cp}${gray}─${reset}"
     local git_p_width=${(S)git_p//\%\{*\%\}}
     git_p_width="${#${(S%%)${git_p_width}//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
 fi
 
-local filler_width=$(($COLUMNS - ${userinfo_width} - ${git_p_width} - ${path_p_width} - 5))
+if ! [[ -z $VIRTUAL_ENV ]]; then
+    local virtualenv=$(basename $VIRTUAL_ENV)
+    local virtualenv_p="${gray}─${op}${virtualenv}${cp}${gray}─${reset}"
+    local virtualenv_p_width=${(S)virtualenv_p//\%\{*\%\}}
+    virtualenv_p_width="${#${(S%%)${virtualenv_p_width}//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
+else
+    local virtualenv_p=""
+    local virtualenv_p_width=0
+fi
+
+local filler_width=$(($COLUMNS - ${userinfo_width} - ${virtualenv_p_width} - ${git_p_width} - ${path_p_width} - 5))
 local filler="${gray}${(l:${filler_width}::─:)}${reset}"
 
 # Second line, with return code and smiley
@@ -149,7 +159,7 @@ local ret_status="${op}%B%?%b${cp}"
 local smiley="%(?,${green}%B:)%b${reset},${red}%B:(%b${reset})"
 
 # Final PROMPT
-PROMPT="${userinfo}${filler}${git_p}${path_p}
+PROMPT="${userinfo}${filler}${virtualenv_p}${git_p}${path_p}
 ${gray}╰─${reset}${ret_status}-${op}${smiley}${cp} %# "
 
 local cur_cmd="${op}%_${cp}"
