@@ -182,6 +182,7 @@ alias "sl"="ls"
 alias "recd"='cd $PWD'
 alias "ls-l"="ls -l"
 alias "grpe"="grep"
+alias "tmux"="tmux -2"
 
 # Other environment variables (like EDITOR)
 debugPrint "- Other environment variables (like EDITOR) ..."
