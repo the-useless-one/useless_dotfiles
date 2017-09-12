@@ -1,0 +1,3 @@
+[submodule "vim/bundle/vim-swift"]
+	path = vim/bundle/vim-swift
+	url = https://github.com/toyamarinyon/vim-swift
