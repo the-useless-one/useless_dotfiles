@@ -81,8 +81,8 @@ syn region ps1String start=/"/ skip=/`"/ end=/"/ contains=@ps1StringSpecial
 syn region ps1String start=/'/ skip=/''/ end=/'/
 
 " Here-Strings
-syn region ps1String start=/@"$/ end=/^"@$/ contains=@ps1StringSpecial
-syn region ps1String start=/@'$/ end=/^'@$/
+syn region ps1String start=/@"$/ end=/^\s*"@$/ contains=@ps1StringSpecial
+syn region ps1String start=/@'$/ end=/^\s*'@$/
 
 " Interpolation
 syn match ps1Escape /`./ contained
