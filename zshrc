@@ -304,8 +304,8 @@ fi
 debugPrint -n "- Setting up history ..."
 if [[ "${ZSH_PRIVACY_MODE}" != "1" ]] ; then
 	export HISTFILE=$HOME/.zsh_history
-	export HISTSIZE=10000
-	export SAVEHIST=10000
+	export HISTSIZE=1000000
+	export SAVEHIST=2000000
 	export LISTMAX=10000
 	debugPrint ""
 else
@@ -323,10 +323,13 @@ debugPrint "- Setting up ZSH options ..."
 export TIMEFMT="%J  %U user %S system %P cpu %*E total %Mk maxmem"
 
 # history things
-setopt SHARE_HISTORY
-setopt INC_APPEND_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
+#setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
 setopt HIST_VERIFY
+setopt HIST_FIND_NO_DUPS
+setopt SHARE_HISTORY
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY
 
 setopt AUTO_CD
 
